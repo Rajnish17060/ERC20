@@ -4,7 +4,7 @@ This is a simple program that demonstrates how to create own ERC20 token and dep
 
 ## Description
 
-This program is a simple contract written in Solidity, a programming language used for developing smart contracts on the Ethereum blockchain. The contract has a constructor and two functions mint and burn.
+This program is a simple contract written in Solidity, a programming language used for developing smart contracts on the Ethereum blockchain. The contract has a constructor and three functions mint, burn and custom transfer.
 ## Getting Started
 
 ### Executing program
@@ -18,29 +18,36 @@ Once you are on the Remix website, create a new file by clicking on the "+" icon
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Token is ERC20 {
-    constructor() ERC20("Token", "TK") {
-        _mint(msg.sender, 5000 * 1 ** decimals());
+contract ERC20Token is ERC20 , Ownable{
+    constructor() ERC20("Token", "TK") Ownable(msg.sender) {
+        _mint(msg.sender, 10 * 10 ** decimals()); 
     }
 
-    function mint(address to, uint256 amount) public {
-        _mint(to, amount);
+    function mint(address recipient, uint256 amount) external onlyOwner {
+        _mint(recipient, amount);
     }
 
-    function burn(uint256 amount) public {
+    function burn(uint256 amount) external {
         _burn(msg.sender, amount);
     }
-}
 
+    function customTransfer(address from, address to, uint256 amount) public returns (bool) {
+        require(balanceOf(msg.sender) >= amount, "Insufficient balance");
+        _transfer(from, to, amount);
+        return true;
+    }
+}
 ```
 
 To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.20", and then click on the "Compile Project3.sol" button.
 
 Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar.
 
-Once the contract is deployed, you can interact with it by calling the functions mint and burn. Pass address and value to mint function and click on transact you can see total supply will increase by that value.
+Once the contract is deployed, you can interact with it by calling the functions mint, burn and custom transfer. Pass address and value to mint function and click on transact you can see total supply will increase by that value.
 Pass value to burn function and click on transact it will reduce total supply by that value.
+Pass address from which you want to transfer, address to which you want to transfer and value you want to transfer to custom transfer function and click on transact.
 
 ## Authors
 Rajnish Kumar
