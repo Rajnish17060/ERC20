@@ -17,7 +17,7 @@ contract ERC20Token is ERC20 , Ownable{
         _burn(msg.sender, amount);
     }
 
-    function customTransfer(address from, address to, uint256 amount) public returns (bool) {
+    function transfer(address from, address to, uint256 amount) public returns (bool) {
         require(balanceOf(msg.sender) >= amount, "Insufficient balance");
         _transfer(from, to, amount);
         return true;
