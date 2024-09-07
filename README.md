@@ -4,7 +4,7 @@ This is a simple program that demonstrates how to create own ERC20 token and dep
 
 ## Description
 
-This program is a simple contract written in Solidity, a programming language used for developing smart contracts on the Ethereum blockchain. The contract has a constructor and three functions mint, burn and custom transfer.
+This program is a simple contract written in Solidity, a programming language used for developing smart contracts on the Ethereum blockchain. The contract has a constructor and three functions mint, burn and transfer.
 ## Getting Started
 
 ### Executing program
@@ -33,7 +33,7 @@ contract ERC20Token is ERC20 , Ownable{
         _burn(msg.sender, amount);
     }
 
-    function customTransfer(address from, address to, uint256 amount) public returns (bool) {
+    function transfer(address from, address to, uint256 amount) public returns (bool) {
         require(balanceOf(msg.sender) >= amount, "Insufficient balance");
         _transfer(from, to, amount);
         return true;
@@ -47,7 +47,7 @@ Once the code is compiled, you can deploy the contract by clicking on the "Deplo
 
 Once the contract is deployed, you can interact with it by calling the functions mint, burn and custom transfer. Pass address and value to mint function and click on transact you can see total supply will increase by that value.
 Pass value to burn function and click on transact it will reduce total supply by that value.
-Pass address from which you want to transfer, address to which you want to transfer and value you want to transfer to custom transfer function and click on transact.
+Pass address from which you want to transfer, address to which you want to transfer and value you want to transfer to transfer function and click on transact.
 
 ## Authors
 Rajnish Kumar
